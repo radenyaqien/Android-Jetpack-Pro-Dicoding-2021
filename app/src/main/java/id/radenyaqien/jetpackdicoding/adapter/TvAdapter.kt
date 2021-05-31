@@ -10,13 +10,13 @@ class TvAdapter : BaseRVAdapter<TvShows, ItemTvshowsBinding>() {
     override fun getLayout() = R.layout.item_tvshows
 
     override fun onBindViewHolder(
-            holder: Companion.BaseViewHolder<ItemTvshowsBinding>,
-            position: Int
+        holder: Companion.BaseViewHolder<ItemTvshowsBinding>,
+        position: Int
     ) {
         Picasso
-                .get()
-                .load(items[position].image)
-                .into(holder.binding.imageView)
+            .get()
+            .load(items[position].image)
+            .into(holder.binding.imageView)
 
         holder.binding.txtGenre.text = items[position].genre
         holder.binding.txtId.text = items[position].id.toString()

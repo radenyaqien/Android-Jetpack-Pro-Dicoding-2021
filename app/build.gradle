@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -16,6 +17,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "api_key", API_KEY)
+        buildConfigField("String", "BASE_URL", BASE_URL)
     }
 
     buildTypes {
@@ -32,30 +35,62 @@ android {
     buildFeatures {
         dataBinding true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
 }
 
 dependencies {
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
+    //androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
     testImplementation 'junit:junit:4.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
+
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test:rules:1.3.0'
+    implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }

@@ -3,11 +3,14 @@ package id.radenyaqien.jetpackdicoding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import id.radenyaqien.jetpackdicoding.utils.Dummy
+import id.radenyaqien.jetpackdicoding.utils.EspressoIdlingResource
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -22,6 +25,7 @@ class MainActivityTest {
     @Before
     fun setUp() {
         ActivityScenario.launch(MainActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
     }
 
     /**
@@ -35,9 +39,9 @@ class MainActivityTest {
         onView(withText("TV Shows")).perform(click())
         onView(withId(R.id.rv_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tv)).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                        dummyTvSeries.size
-                )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dummyTvSeries.size
+            )
         )
         assertNotNull(dummyTvSeries)
         assertEquals(11, dummyTvSeries.size)
@@ -53,13 +57,26 @@ class MainActivityTest {
     fun getMovies() {
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                        dummyMovies.size
-                )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dummyMovies.size
+            )
         )
         assertNotNull(dummyMovies)
         assertEquals(11, dummyMovies.size)
     }
 
+    @Test
+    fun getPopularMovies() {
+        onView(withText("Popular Movies")).perform(click())
+        onView(withId(R.id.rv_popular)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_popular)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(20)
+        )
 
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 }

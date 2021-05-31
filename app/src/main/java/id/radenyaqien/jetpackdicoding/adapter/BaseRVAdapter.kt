@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 abstract class BaseRVAdapter<T : Any, VB : ViewDataBinding> :
-        RecyclerView.Adapter<BaseRVAdapter.Companion.BaseViewHolder<VB>>() {
+    RecyclerView.Adapter<BaseRVAdapter.Companion.BaseViewHolder<VB>>() {
 
 
     var items = mutableListOf<T>()
@@ -42,12 +42,12 @@ abstract class BaseRVAdapter<T : Any, VB : ViewDataBinding> :
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BaseViewHolder<VB>(
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), getLayout(), parent, false)
+        DataBindingUtil.inflate(LayoutInflater.from(parent.context), getLayout(), parent, false)
     )
 
     companion object {
         class BaseViewHolder<VB : ViewDataBinding>(var binding: VB) :
-                RecyclerView.ViewHolder(binding.root)
+            RecyclerView.ViewHolder(binding.root)
 
     }
 }
