@@ -10,20 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.radenyaqien.jetpackdicoding.DetailActivity
-import id.radenyaqien.jetpackdicoding.MainViewModel
-import id.radenyaqien.jetpackdicoding.adapter.TvAdapter
+import id.radenyaqien.jetpackdicoding.DetailTvShowsActivity
+import id.radenyaqien.jetpackdicoding.adapter.popularAdapter
 import id.radenyaqien.jetpackdicoding.databinding.FragmentTvShowsBinding
-import id.radenyaqien.jetpackdicoding.models.TvShows
-import id.radenyaqien.jetpackdicoding.utils.EspressoIdlingResource
+import id.radenyaqien.jetpackdicoding.models.PopularTv
+import id.radenyaqien.jetpackdicoding.ui.viewmodels.TvViewModel
 
 
 @AndroidEntryPoint
 class TvShowsFragment : Fragment() {
 
-    private val mAdapter by lazy { TvAdapter() }
+    private val mAdapter by lazy { popularAdapter() }
     private lateinit var binding: FragmentTvShowsBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: TvViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +45,17 @@ class TvShowsFragment : Fragment() {
             )
         }
         binding.progress.visibility = View.VISIBLE
-        EspressoIdlingResource.increment()
-        viewModel.getTvShows().observe(viewLifecycleOwner, {
+
+        viewModel.getTv()
+
+        viewModel.response.observe(viewLifecycleOwner, {
             binding.progress.visibility = View.GONE
             mAdapter.addItems(it)
-            EspressoIdlingResource.decrement()
+
         })
-        mAdapter.listener = { _: View, item: TvShows, _: Int ->
-            Intent(requireContext(), DetailActivity::class.java).also {
-                it.putExtra("EXTRA_TVSHOWS", item)
+        mAdapter.listener = { _: View, item: PopularTv, _: Int ->
+            Intent(requireContext(), DetailTvShowsActivity::class.java).also {
+                it.putExtra(DetailTvShowsActivity.EXTRA_TVSHOWS, item)
                 startActivity(it)
             }
         }

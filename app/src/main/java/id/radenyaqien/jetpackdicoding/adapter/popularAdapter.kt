@@ -2,11 +2,11 @@ package id.radenyaqien.jetpackdicoding.adapter
 
 import id.radenyaqien.jetpackdicoding.R
 import id.radenyaqien.jetpackdicoding.databinding.ItemPopularBinding
-import id.radenyaqien.jetpackdicoding.models.PopularMovies
+import id.radenyaqien.jetpackdicoding.models.PopularTv
 import id.radenyaqien.jetpackdicoding.utils.Dummy
 import id.radenyaqien.jetpackdicoding.utils.bindImageUrlNoFit
 
-class popularAdapter : BaseRVAdapter<PopularMovies, ItemPopularBinding>() {
+class popularAdapter : BaseRVAdapter<PopularTv, ItemPopularBinding>() {
     override fun getLayout() = R.layout.item_popular
 
     override fun onBindViewHolder(

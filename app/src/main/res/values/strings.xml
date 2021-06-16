@@ -5,4 +5,12 @@
     <string name="genre">Genre :</string>
     <string name="release_on">Release On :</string>
     <string name="popular_movies">Popular Movies</string>
+    <string name="tvshows">TV Shows</string>
+    <string name="movies">Popular Movies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favourite">Favorite</string>
+    <string name="state_favourite">Favorite</string>
+    <string name="myfavmovies">My Favorite Movies</string>
+    <string name="detailtvshow">Detail TV Show</string>
+    <string name="detailmovies">Detail Movies</string>
 </resources>

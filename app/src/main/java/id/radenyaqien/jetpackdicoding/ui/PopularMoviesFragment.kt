@@ -9,19 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.radenyaqien.jetpackdicoding.DetailActivity
-import id.radenyaqien.jetpackdicoding.PopularViewModel
-import id.radenyaqien.jetpackdicoding.adapter.popularAdapter
+import id.radenyaqien.jetpackdicoding.DetailMoviesActivity
+import id.radenyaqien.jetpackdicoding.adapter.MoviesAdapter
 import id.radenyaqien.jetpackdicoding.databinding.FragmentPopularMoviesBinding
 import id.radenyaqien.jetpackdicoding.models.PopularMovies
-import id.radenyaqien.jetpackdicoding.utils.EspressoIdlingResource
+import id.radenyaqien.jetpackdicoding.ui.viewmodels.MoviesViewModel
 
 
 @AndroidEntryPoint
 class PopularMoviesFragment : Fragment() {
 
-    private val mAdapter by lazy { popularAdapter() }
-    private val viewmodel: PopularViewModel by viewModels()
+    private val mAdapter by lazy { MoviesAdapter() }
+    private val viewmodel: MoviesViewModel by viewModels()
     private lateinit var binding: FragmentPopularMoviesBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +33,14 @@ class PopularMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewmodel.getmoviesOl()
-        EspressoIdlingResource.increment()
+        binding.progress.visibility = View.VISIBLE
+        viewmodel.getmoviesApi()
+
         setupRV()
         viewmodel.response.observe(viewLifecycleOwner) {
+            binding.progress.visibility = View.GONE
             mAdapter.addItems(it)
-            EspressoIdlingResource.decrement()
+
         }
     }
 
@@ -52,8 +53,8 @@ class PopularMoviesFragment : Fragment() {
 
         mAdapter.listener = { _: View, item: PopularMovies, _: Int ->
             startActivity(
-                Intent(requireContext(), DetailActivity::class.java)
-                    .putExtra("EXTRA_POPULAR", item)
+                Intent(requireContext(), DetailMoviesActivity::class.java)
+                    .putExtra(DetailMoviesActivity.EXTRA_MOVIES, item)
             )
 
         }

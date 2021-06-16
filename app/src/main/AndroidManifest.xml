@@ -3,6 +3,7 @@
     package="id.radenyaqien.jetpackdicoding">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -11,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackDicoding">
+        <activity android:name=".DetailTvShowsActivity"></activity>
+        <activity android:name=".DetailMoviesActivity" />
+        <activity android:name=".FavoriteActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
